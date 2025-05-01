@@ -11,5 +11,5 @@ service CalculatorService{
     rpc Multiply(Operands) returns (Response);
     rpc Primes(PrimesRequest) returns (stream Response);
     rpc Average(stream AverageRequest) returns (AverageResponse);
-    rpc Max(stream MaxRequest) returns (MaxResponse);
+    rpc Max(stream MaxRequest) returns (stream MaxResponse);
 }

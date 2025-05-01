@@ -56,6 +56,7 @@ public class GreetingServiceTest extends TestSetup {
         });
 
         Stream.of("ramesh", "suresh", "monu", "sonu").forEach(name -> stream.onNext(GreetRequest.newBuilder().setName(name).build()));
+        stream.onCompleted();
         latch.await(3, TimeUnit.SECONDS);
     }
 }

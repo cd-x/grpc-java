@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -77,5 +78,29 @@ public class CalculatorServiceTest extends TestSetup {
         }catch (InterruptedException exception){
             log.error(exception.getMessage());
         }
+    }
+
+    @Test
+    public void test_max() throws InterruptedException {
+        CountDownLatch latch = new CountDownLatch(1);
+        StreamObserver<MaxRequest> stream = nbStub.max(new StreamObserver<MaxResponse>() {
+            @Override
+            public void onNext(MaxResponse maxResponse) {
+                log.info("[server]: max value: {}", maxResponse.getMax());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                log.error(throwable.getMessage());
+            }
+
+            @Override
+            public void onCompleted() {
+                latch.countDown();
+            }
+        });
+        Stream.of(3,5,1,-1, 23,95,445,9,7).forEach(num -> stream.onNext(MaxRequest.newBuilder().setNum(num).build()));
+        stream.onCompleted();
+        latch.await(3, TimeUnit.SECONDS);
     }
 }
