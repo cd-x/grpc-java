@@ -1,6 +1,7 @@
 package setup;
 
 import com.example.services.CalculatorServiceImpl;
+import com.example.services.GreetingServiceImpl;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Server;
@@ -20,7 +21,10 @@ public class TestSetup {
 
     @BeforeAll
     public void setupGrpcServer() throws IOException {
-        server = ServerBuilder.forPort(PORT).addService(new CalculatorServiceImpl()).build().start();
+        server = ServerBuilder.forPort(PORT)
+                .addService(new CalculatorServiceImpl())
+                .addService(new GreetingServiceImpl())
+                .build().start();
         managedChannel = ManagedChannelBuilder.forAddress("localhost", PORT).usePlaintext().build();
     }
     @AfterAll

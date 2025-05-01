@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+
+option java_package = "com.example.greetings";
+option java_multiple_files = true;
+
+service GreetingService{
+    rpc GreetUser(GreetRequest) returns (GreetResponse);
+    rpc GreetManyTimes(GreetRequest) returns (stream GreetResponse);
+}
+
+message GreetRequest{
+    string name = 1;
+}
+
+message GreetResponse{
+    string greeting = 1;
+}

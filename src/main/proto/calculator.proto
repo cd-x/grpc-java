@@ -6,7 +6,8 @@ option java_multiple_files = true;
 service CalculatorService{
     rpc GetSum(Operands) returns (Response);
     rpc Multiply(Operands) returns (Response);
-
+    rpc Primes(PrimesRequest) returns (stream Response);
+    rpc Average(stream AverageRequest) returns (AverageResponse);
 }
 
 message Operands{
@@ -15,4 +16,17 @@ message Operands{
 }
 message Response{
     int64 res = 1;
+}
+
+message PrimesRequest{
+    int32 from = 1;
+    int32 to = 2;
+}
+
+message AverageRequest{
+    int32 num = 1;
+}
+
+message AverageResponse{
+    double avg = 1;
 }

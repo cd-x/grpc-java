@@ -1,6 +1,7 @@
 package com.example;
 
 import com.example.services.CalculatorServiceImpl;
+import com.example.services.GreetingServiceImpl;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         Server server = ServerBuilder.forPort(PORT)
                 .addService(new CalculatorServiceImpl())
+                .addService(new GreetingServiceImpl())
                 .build();
         try{
             server.start();
