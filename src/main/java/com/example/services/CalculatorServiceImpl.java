@@ -1,6 +1,7 @@
 package com.example.services;
 
 import com.example.calculator.*;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 
@@ -88,5 +89,15 @@ public class CalculatorServiceImpl extends CalculatorServiceGrpc.CalculatorServi
                 responseObserver.onCompleted();
             }
         };
+    }
+    @Override
+    public void divide(Operands operands, StreamObserver<Response> streamObserver){
+        try{
+            long res =  operands.getLop()/operands.getRop();
+            streamObserver.onNext(Response.newBuilder().setRes(res).build());
+        }catch (ArithmeticException exception){
+            streamObserver.onError(Status.INVALID_ARGUMENT
+                    .withDescription("right operand should be greater than zero").asRuntimeException());
+        }
     }
 }

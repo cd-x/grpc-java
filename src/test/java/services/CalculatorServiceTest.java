@@ -1,6 +1,7 @@
 package services;
 
 import com.example.calculator.*;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -102,5 +103,16 @@ public class CalculatorServiceTest extends TestSetup {
         Stream.of(3,5,1,-1, 23,95,445,9,7).forEach(num -> stream.onNext(MaxRequest.newBuilder().setNum(num).build()));
         stream.onCompleted();
         latch.await(3, TimeUnit.SECONDS);
+    }
+
+    @Test
+    public void test_divide(){
+        try {
+            Response response = stub.divide(Operands.newBuilder().setLop(3).setRop(0).build());
+            log.error("After divide: {}", response.getRes());
+        }catch (Exception e) {
+            Status status = Status.fromThrowable(e);
+            assertEquals(Status.INVALID_ARGUMENT.getCode(), status.getCode());
+        }
     }
 }
