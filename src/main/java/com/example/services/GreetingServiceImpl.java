@@ -1,8 +1,11 @@
 package com.example.services;
 
+import com.example.calculator.Response;
 import com.example.greetings.GreetRequest;
 import com.example.greetings.GreetResponse;
 import com.example.greetings.GreetingServiceGrpc;
+import io.grpc.Context;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import java.util.stream.IntStream;
@@ -37,4 +40,18 @@ public class GreetingServiceImpl extends GreetingServiceGrpc.GreetingServiceImpl
         };
 
     }
+
+    @Override
+    public void greetWithDeadline(GreetRequest request, StreamObserver<GreetResponse> streamObserver){
+        Context context = Context.current();
+        try{
+            Thread.sleep(300);
+            if(context.isCancelled()) return;
+            streamObserver.onNext(GreetResponse.newBuilder().setGreeting("Hello, "+request.getName()).build());
+        }catch (InterruptedException exception){
+            streamObserver.onError(Status.RESOURCE_EXHAUSTED.asRuntimeException());
+        }
+        streamObserver.onCompleted();
+    }
+
 }
