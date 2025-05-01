@@ -22,4 +22,10 @@ public class CalculatorServiceTest extends TestSetup {
         Response res = stub.getSum(Operands.newBuilder().setLop(23).setRop(34).build());
         assertEquals(57, res.getRes());
     }
+
+    @Test
+    public void testMultiply(){
+        Response response = stub.multiply(Operands.newBuilder().setRop(2).setLop(3).build());
+        assertEquals(6, response.getRes());
+    }
 }
