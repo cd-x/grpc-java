@@ -3,30 +3,13 @@ syntax = "proto3";
 option java_package = "com.example.calculator";
 option java_multiple_files = true;
 
+import "calculator_request.proto";
+import "calculator_response.proto";
+
 service CalculatorService{
     rpc GetSum(Operands) returns (Response);
     rpc Multiply(Operands) returns (Response);
     rpc Primes(PrimesRequest) returns (stream Response);
     rpc Average(stream AverageRequest) returns (AverageResponse);
-}
-
-message Operands{
-    int64 lop = 1;
-    int64 rop = 2;
-}
-message Response{
-    int64 res = 1;
-}
-
-message PrimesRequest{
-    int32 from = 1;
-    int32 to = 2;
-}
-
-message AverageRequest{
-    int32 num = 1;
-}
-
-message AverageResponse{
-    double avg = 1;
+    rpc Max(stream MaxRequest) returns (MaxResponse);
 }

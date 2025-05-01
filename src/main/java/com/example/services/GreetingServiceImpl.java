@@ -6,10 +6,12 @@ import com.example.greetings.GreetRequest;
 import com.example.greetings.GreetResponse;
 import com.example.greetings.GreetingServiceGrpc;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+@Slf4j
 public class GreetingServiceImpl extends GreetingServiceGrpc.GreetingServiceImplBase {
     @Override
     public void greetManyTimes(GreetRequest request, StreamObserver<GreetResponse> streamObserver){
@@ -17,5 +19,26 @@ public class GreetingServiceImpl extends GreetingServiceGrpc.GreetingServiceImpl
             streamObserver.onNext(GreetResponse.newBuilder().setGreeting(String.format(">%d# Welcome %s", i, request.getName())).build());
         });
         streamObserver.onCompleted();
+    }
+
+    @Override
+    public StreamObserver<GreetRequest> greetAll(StreamObserver<GreetResponse> streamObserver){
+        return new StreamObserver<GreetRequest>() {
+            @Override
+            public void onNext(GreetRequest request) {
+                streamObserver.onNext(GreetResponse.newBuilder().setGreeting(String.format("Hello, %s", request.getName())).build());
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+                streamObserver.onError(throwable);
+            }
+
+            @Override
+            public void onCompleted() {
+                streamObserver.onCompleted();
+            }
+        };
+
     }
 }

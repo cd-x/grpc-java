@@ -7,6 +7,7 @@ option java_multiple_files = true;
 service GreetingService{
     rpc GreetUser(GreetRequest) returns (GreetResponse);
     rpc GreetManyTimes(GreetRequest) returns (stream GreetResponse);
+    rpc GreetAll(stream GreetRequest) returns (stream GreetResponse);
 }
 
 message GreetRequest{

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_package = "com.example.calculator";
+option java_multiple_files = true;
+
+message Response{
+    int64 res = 1;
+}
+
+message AverageResponse{
+    double avg = 1;
+}
+
+message MaxResponse{
+    int32 max = 1;
+}
