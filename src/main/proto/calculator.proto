@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "com.example.calculator";
+option java_multiple_files = true;
+
+service CalculatorService{
+    rpc GetSum(Operands) returns (Response);
+    rpc Multiply(Operands) returns (Response);
+
+}
+
+message Operands{
+    int64 lop = 1;
+    int64 rop = 2;
+}
+message Response{
+    int64 res = 1;
+}
