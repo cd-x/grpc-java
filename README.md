@@ -9,4 +9,8 @@ In actual env this should be read from secrets or should be managed by **Istio**
 2. make sure openssl is installed in your system
 3. go to _src/test/resources/ssl_ 
 4. run _chmod +x ssl.sh_ to make script executable
-5. run _./ssl.sh_  it would generate tls certificates. 
+5. run _./ssl.sh_  it would generate tls certificates.
+
+#### Some tests involve interaction with docker
+1. pls turn on docker before running tests.
+
