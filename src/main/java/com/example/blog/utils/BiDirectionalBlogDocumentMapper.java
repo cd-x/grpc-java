@@ -4,6 +4,8 @@ import com.example.blog.Blog;
 import com.example.blog.constants.Constants;
 import org.bson.Document;
 
+import java.util.Objects;
+
 public class BiDirectionalBlogDocumentMapper {
     public static Blog mapDocumentToBlog(Document document){
         return Blog.newBuilder()
@@ -16,10 +18,9 @@ public class BiDirectionalBlogDocumentMapper {
 
     public static Document mapBlogToDocument(Blog blog){
         Document document = new Document();
-        document.append(Constants.ID, blog.getId())
-                .append(Constants.AUTHOR, blog.getAuthor())
-                .append(Constants.TITLE, blog.getTitle())
-                .append(Constants.CONTENT, blog.getContent());
+        document.append(Constants.ID, blog.getId()).append(Constants.AUTHOR, blog.getAuthor())
+        .append(Constants.TITLE, blog.getTitle())
+        .append(Constants.CONTENT, blog.getContent());
         return document;
     }
 }

@@ -25,7 +25,7 @@ public class BlogServiceTest extends MongoDbTestSetup {
     }
     @Test
     public void test_create_blog(){
-        BlogId blogId = blockingStub.createBlog(Blog.newBuilder()
+        BlogId blogId = blockingStub.createBlog(Blog.newBuilder().setId("Blog_123")
                 .setAuthor("mehra")
                 .setTitle("first blog")
                 .setContent("This is first blog of Ashish Nehra!!")

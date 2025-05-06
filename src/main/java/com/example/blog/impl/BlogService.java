@@ -23,7 +23,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 @Slf4j
 public class BlogService extends BlogServiceGrpc.BlogServiceImplBase {
-    private MongoCollection<Document> collection;
+    private final MongoCollection<Document> collection;
     public BlogService(MongoClient mongoClient){
         MongoDatabase db = mongoClient.getDatabase("blogdb");
         collection = db.getCollection("blog");
